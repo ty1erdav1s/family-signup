@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Family Gathering – Food Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:    #243746;
+      --orange:  #EE9822;
+      --blue:    #5A88A2;
+      --gray-lt: #E2E2E2;
+      --gray-md: #717073;
+      --black:   #222222;
+      --green:   #659C5E;
+      --red:     #8F281D;
+      --yellow:  #F6BD60;
+      --white:   #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Gotham', 'Lato', Arial, sans-serif;
+      background: var(--gray-lt);
+      color: var(--black);
+      min-height: 100vh;
+    }
+
+    /* HERO */
+    header {
+      background: var(--navy);
+      color: var(--white);
+      text-align: center;
+      padding: 56px 24px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,
+        transparent, transparent 40px,
+        rgba(238,152,34,.06) 40px, rgba(238,152,34,.06) 80px);
+    }
+    header .badge {
+      display: inline-block;
+      background: var(--orange); color: var(--navy);
+      font-family: 'Lato', Arial, sans-serif;
+      font-weight: 700; font-size: 11px; letter-spacing: 2.5px;
+      text-transform: uppercase; padding: 5px 14px;
+      border-radius: 2px; margin-bottom: 18px;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      font-weight: 900; line-height: 1.1; position: relative;
+    }
+    header h1 span { color: var(--orange); }
+    header p.subtitle {
+      margin-top: 14px; font-size: 1rem; color: var(--gray-lt);
+      font-weight: 300; max-width: 500px;
+      margin-inline: auto; position: relative;
+    }
+    #event-details {
+      display: flex; justify-content: center; gap: 28px;
+      margin-top: 28px; flex-wrap: wrap; position: relative;
+    }
+    .detail-chip {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 4px; padding: 8px 18px;
+      font-size: 0.85rem; font-weight: 700; letter-spacing: .5px;
+    }
+
+    /* LAYOUT */
+    main { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+
+    .section-label {
+      font-family: 'Lato', Arial, sans-serif;
+      font-weight: 700; font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gray-md); margin-bottom: 16px;
+    }
+
+    /* CATEGORY GRID */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px; margin-bottom: 40px;
+    }
+    .cat-card {
+      background: var(--white); border-radius: 6px;
+      border: 2px solid transparent; padding: 20px; cursor: pointer;
+      transition: border-color .18s, box-shadow .18s, transform .15s;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .cat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+    .cat-card.selected { border-color: var(--orange); background: #fff9ef; }
+    .cat-card.full { opacity: .55; cursor: not-allowed; }
+    .cat-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .cat-emoji { font-size: 1.8rem; }
+    .cat-name { font-weight: 700; font-size: 1rem; color: var(--navy); }
+    .progress-bar-wrap {
+      background: var(--gray-lt); border-radius: 99px;
+      height: 7px; overflow: hidden; margin-bottom: 6px;
+    }
+    .progress-bar-fill {
+      height: 100%; border-radius: 99px;
+      background: var(--green); transition: width .4s ease;
+    }
+    .progress-bar-fill.warn     { background: var(--orange); }
+    .progress-bar-fill.full-bar { background: var(--red); }
+    .cat-meta {
+      font-size: 0.78rem; color: var(--gray-md);
+      display: flex; justify-content: space-between;
+    }
+    .cat-meta .spots       { font-weight: 700; }
+    .cat-meta .spots.zero  { color: var(--red); }
+
+    /* FORM */
+    .form-card {
+      background: var(--white); border-radius: 6px;
+      padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      margin-bottom: 40px;
+    }
+    .form-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--navy); margin-bottom: 22px;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full-width { grid-column: 1 / -1; }
+    label {
+      font-size: 0.8rem; font-weight: 700; letter-spacing: .5px;
+      color: var(--navy); text-transform: uppercase;
+    }
+    input, select, textarea {
+      font-family: 'Lato', Arial, sans-serif; font-size: 0.95rem;
+      border: 1.5px solid var(--gray-lt); border-radius: 4px;
+      padding: 10px 13px; color: var(--black);
+      transition: border-color .15s; background: #fafafa;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--blue); background: var(--white);
+    }
+    textarea { resize: vertical; min-height: 72px; }
+
+    .selected-cat-display {
+      grid-column: 1 / -1; background: #fff9ef;
+      border: 1.5px solid var(--orange); border-radius: 4px;
+      padding: 12px 16px; font-size: 0.9rem; color: var(--navy); font-weight: 700;
+    }
+    .selected-cat-display.none {
+      border-color: var(--gray-lt); color: var(--gray-md); font-weight: 400;
+    }
+
+    /* BUTTONS */
+    .submit-btn {
+      margin-top: 22px; width: 100%; background: var(--navy);
+      color: var(--white); border: none; border-radius: 4px;
+      padding: 15px; font-family: 'Lato', Arial, sans-serif;
+      font-size: 1rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; cursor: pointer; transition: background .18s;
+    }
+    .submit-btn:hover    { background: var(--blue); }
+    .submit-btn:disabled { background: var(--gray-md); cursor: not-allowed; }
+    .submit-btn.cancel   { background: var(--gray-md); margin-top: 8px; }
+    .submit-btn.cancel:hover { background: var(--black); }
+
+    /* SIGNUPS LIST */
+    .signups-card {
+      background: var(--white); border-radius: 6px;
+      padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    }
+    .signups-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .signups-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--navy);
+    }
+    .refresh-btn {
+      background: none; border: 1.5px solid var(--blue); color: var(--blue);
+      border-radius: 4px; padding: 6px 14px;
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 0.8rem; font-weight: 700; cursor: pointer;
+      letter-spacing: .5px; text-transform: uppercase;
+      transition: background .15s, color .15s;
+    }
+    .refresh-btn:hover { background: var(--blue); color: var(--white); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    thead th {
+      background: var(--navy); color: var(--white);
+      text-align: left; padding: 10px 14px;
+      font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;
+    }
+    tbody tr:nth-child(even) { background: #f8f8f8; }
+    tbody tr.mine            { background: #fff9ef !important; }
+    tbody td { padding: 10px 14px; border-bottom: 1px solid var(--gray-lt); }
+    tbody tr:last-child td   { border-bottom: none; }
+
+    .cat-pill {
+      display: inline-block; background: var(--navy); color: var(--white);
+      border-radius: 3px; padding: 2px 8px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: .5px;
+    }
+
+    .row-actions { display: flex; gap: 6px; }
+    .icon-btn {
+      background: none; border: 1px solid var(--gray-lt);
+      border-radius: 3px; padding: 3px 8px;
+      font-size: 0.72rem; cursor: pointer; font-family: inherit;
+      color: var(--gray-md); transition: all .15s;
+    }
+    .icon-btn:hover.edit   { border-color: var(--blue); color: var(--blue); }
+    .icon-btn:hover.delete { border-color: var(--red);  color: var(--red); }
+    .mine-tag {
+      display: inline-block; background: var(--orange); color: var(--navy);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 1px;
+      padding: 1px 6px; border-radius: 2px; margin-left: 6px;
+      text-transform: uppercase;
+    }
+
+    /* TOAST */
+    #toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--navy); color: var(--white);
+      padding: 13px 26px; border-radius: 5px;
+      font-size: 0.9rem; font-weight: 700;
+      box-shadow: 0 8px 28px rgba(0,0,0,.2);
+      transition: transform .3s ease; z-index: 999;
+      max-width: 90vw; text-align: center;
+    }
+    #toast.show       { transform: translateX(-50%) translateY(0); }
+    #toast.success    { background: var(--green); }
+    #toast.error      { background: var(--red); }
+
+    .loading-row td { text-align: center; color: var(--gray-md); padding: 30px; }
+
+    .config-notice {
+      background: #fff9ef; border-left: 4px solid var(--orange);
+      border-radius: 0 4px 4px 0;
+      padding: 16px 20px; margin-bottom: 28px;
+      font-size: 0.88rem; color: var(--navy);
+    }
+    .config-notice strong { display: block; margin-bottom: 4px; font-size: 0.95rem; }
+    .config-notice code {
+      background: rgba(0,0,0,.08); border-radius: 3px;
+      padding: 1px 5px; font-family: monospace; font-size: 0.85rem;
+    }
+
+    .edit-mode-banner {
+      background: var(--blue); color: var(--white);
+      padding: 10px 16px; border-radius: 4px; margin-bottom: 16px;
+      font-size: 0.88rem; font-weight: 700;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">🍽 Food Sign‑Up</div>
+  <h1>Family <span>Gathering</span></h1>
+  <p class="subtitle">Pick a food category below and let us know what you're bringing!</p>
+  <div id="event-details">
+    <div class="detail-chip">📅 <span id="event-date">Loading…</span></div>
+    <div class="detail-chip">📍 <span id="event-location">Loading…</span></div>
+  </div>
+</header>
+
+<main>
+
+  <div class="config-notice" id="config-notice">
+    <strong>⚙️ Setup Required</strong>
+    Open this file in a text editor and replace <code>YOUR_APPS_SCRIPT_URL_HERE</code> near the
+    top of the &lt;script&gt; section with your deployed Google Apps Script web app URL.
+    See the included <strong>SETUP.md</strong> for step-by-step instructions.
+  </div>
+
+  <p class="section-label">1 · Choose a Food Category</p>
+  <div class="categories" id="categories-grid">
+    <div style="grid-column:1/-1; text-align:center; color:var(--gray-md); padding:20px;">
+      Loading categories…
+    </div>
+  </div>
+
+  <div class="form-card">
+    <h2 id="form-title">2 · Your Sign-Up Details</h2>
+
+    <div class="edit-mode-banner" id="edit-banner" style="display:none;">
+      <span>✏️ Editing your sign-up</span>
+      <button class="icon-btn" onclick="cancelEdit()" style="color:white;border-color:white;">Cancel</button>
+    </div>
+
+    <div class="form-grid">
+      <div class="selected-cat-display none full-width" id="selected-cat-display">
+        ← Select a category above first
+      </div>
+
+      <div class="field">
+        <label for="name">Your Name *</label>
+        <input type="text" id="name" placeholder="e.g. Aunt Linda" required/>
+      </div>
+      <div class="field">
+        <label for="dish">Dish / Item *</label>
+        <input type="text" id="dish" placeholder="e.g. Mac & Cheese" required/>
+      </div>
+      <div class="field">
+        <label for="serves">Approximate Servings</label>
+        <input type="number" id="serves" placeholder="e.g. 8" min="1"/>
+      </div>
+      <div class="field">
+        <label for="dietary">Dietary Info</label>
+        <input type="text" id="dietary" placeholder="e.g. Gluten‑free, Vegan"/>
+      </div>
+      <div class="field full-width">
+        <label for="notes">Notes (optional)</label>
+        <textarea id="notes" placeholder="Anything else we should know?"></textarea>
+      </div>
+    </div>
+    <button class="submit-btn" id="submit-btn" onclick="submitSignup()">Sign Me Up!</button>
+  </div>
+
+  <div class="signups-card">
+    <div class="signups-header">
+      <h2>Who's Bringing What</h2>
+      <button class="refresh-btn" onclick="loadSignups()">↻ Refresh</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th><th>Category</th><th>Dish</th>
+          <th>Servings</th><th>Dietary</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="signups-tbody">
+        <tr class="loading-row"><td colspan="6">Loading sign-ups…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<div id="toast"></div>
+
+<script>
+  // ─────────────────────────────────────────────────────────
+  //  CONFIGURATION  ← Only ONE thing to edit
+  // ─────────────────────────────────────────────────────────
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw7Lk4Idz3ehnuMoGfMMU3tTaWCW0JjGspS1NqDhUjR1F0PP22bmb3yvxQBuzO8M-tZ/exec';
+  // ─────────────────────────────────────────────────────────
+
+  const LS_KEY = 'familyGathering_myTokens';   // localStorage key for {rowId: editToken}
+
+  let categories       = [];
+  let signups          = [];
+  let selectedCategory = null;
+  let editingRowId     = null;   // null = adding new, otherwise editing this row
+
+  // ── Local-storage helpers ───────────────────────────────
+  function getMyTokens() {
+    try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function saveMyToken(rowId, token) {
+    const t = getMyTokens(); t[rowId] = token;
+    localStorage.setItem(LS_KEY, JSON.stringify(t));
+  }
+  function removeMyToken(rowId) {
+    const t = getMyTokens(); delete t[rowId];
+    localStorage.setItem(LS_KEY, JSON.stringify(t));
+  }
+  function isMine(rowId) { return !!getMyTokens()[rowId]; }
+
+  // ── Boot ────────────────────────────────────────────────
+  async function init() {
+    if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+      // Demo mode
+      categories = [
+        { id:'appetizers', name:'Appetizers',  emoji:'🥗', limit:4 },
+        { id:'mains',      name:'Main Dishes', emoji:'🍗', limit:5 },
+        { id:'sides',      name:'Side Dishes', emoji:'🥘', limit:6 },
+        { id:'desserts',   name:'Desserts',    emoji:'🍰', limit:5 },
+        { id:'drinks',     name:'Drinks',      emoji:'🥤', limit:4 },
+      ];
+      document.getElementById('event-date').textContent     = 'Event Date (demo)';
+      document.getElementById('event-location').textContent = 'Event Location (demo)';
+      signups = [
+        { rowId:'demo-1', name:'Aunt Linda', category:'mains',    dish:'Baked Ziti',     serves:'10', dietary:'' },
+        { rowId:'demo-2', name:'Uncle Bob',  category:'drinks',   dish:'Lemonade',       serves:'12', dietary:'Vegan' },
+        { rowId:'demo-3', name:'Cousin Mia', category:'desserts', dish:'Chocolate Cake', serves:'8',  dietary:'' },
+      ];
+      renderCategories(); renderTable();
+      return;
+    }
+
+    document.getElementById('config-notice').style.display = 'none';
+
+    // Fetch config + signups in parallel
+    try {
+      const [configRes, signupsRes] = await Promise.all([
+        fetch(`${APPS_SCRIPT_URL}?action=getConfig`).then(r => r.json()),
+        fetch(`${APPS_SCRIPT_URL}?action=getSignups`).then(r => r.json()),
+      ]);
+      categories = configRes.categories || [];
+      document.getElementById('event-date').textContent     = configRes.event?.date     || '';
+      document.getElementById('event-location').textContent = configRes.event?.location || '';
+      signups = signupsRes.signups || [];
+      renderCategories(); renderTable();
+    } catch (e) {
+      console.error(e);
+      showToast('Could not load. Check your Apps Script URL.', 'error');
+    }
+  }
+
+  async function loadSignups() {
+    if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+      renderCategories(); renderTable(); return;
+    }
+    try {
+      const res  = await fetch(`${APPS_SCRIPT_URL}?action=getSignups`);
+      const data = await res.json();
+      signups = data.signups || [];
+      renderCategories(); renderTable();
+    } catch (e) {
+      console.error(e);
+      showToast('Could not refresh sign-ups.', 'error');
+    }
+  }
+
+  // ── Render ──────────────────────────────────────────────
+  function renderCategories() {
+    const grid = document.getElementById('categories-grid');
+    grid.innerHTML = '';
+    categories.forEach(cat => {
+      const count     = signups.filter(s => s.category === cat.id).length;
+      const pct       = Math.min(count / cat.limit, 1);
+      const remaining = cat.limit - count;
+      const isFull    = remaining <= 0;
+      const isWarn    = pct >= 0.67 && !isFull;
+
+      // When editing, allow selecting the same category even if "full"
+      const editingThis = editingRowId && signups.find(s => s.rowId === editingRowId)?.category === cat.id;
+      const blocked     = isFull && !editingThis;
+
+      const card = document.createElement('div');
+      card.className = 'cat-card' + (blocked ? ' full' : '') +
+                       (selectedCategory === cat.id ? ' selected' : '');
+      card.innerHTML = `
+        <div class="cat-top">
+          <span class="cat-emoji">${cat.emoji}</span>
+          <span class="cat-name">${esc(cat.name)}</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill ${isFull ? 'full-bar' : isWarn ? 'warn' : ''}"
+               style="width:${pct*100}%"></div>
+        </div>
+        <div class="cat-meta">
+          <span>${count} of ${cat.limit} signed up</span>
+          <span class="spots ${isFull ? 'zero' : ''}">
+            ${isFull ? 'FULL' : remaining + ' spot' + (remaining===1?'':'s') + ' left'}
+          </span>
+        </div>
+      `;
+      if (!blocked) card.onclick = () => selectCategory(cat.id);
+      grid.appendChild(card);
+    });
+  }
+
+  function selectCategory(id) {
+    selectedCategory = id;
+    const cat  = categories.find(c => c.id === id);
+    const disp = document.getElementById('selected-cat-display');
+    disp.className   = 'selected-cat-display full-width';
+    disp.textContent = `${cat.emoji}  Category selected: ${cat.name}`;
+    renderCategories();
+  }
+
+  function renderTable() {
+    const tbody = document.getElementById('signups-tbody');
+    if (!signups.length) {
+      tbody.innerHTML = '<tr class="loading-row"><td colspan="6">No sign-ups yet — be the first!</td></tr>';
+      return;
+    }
+    tbody.innerHTML = signups.map(s => {
+      const cat   = categories.find(c => c.id === s.category);
+      const mine  = isMine(s.rowId);
+      const label = cat ? `${cat.emoji} ${esc(cat.name)}` : esc(s.category);
+      return `<tr class="${mine ? 'mine' : ''}">
+        <td><strong>${esc(s.name)}</strong>${mine ? '<span class="mine-tag">You</span>' : ''}</td>
+        <td><span class="cat-pill">${label}</span></td>
+        <td>${esc(s.dish)}</td>
+        <td>${esc(s.serves)}</td>
+        <td>${esc(s.dietary)}</td>
+        <td>
+          ${mine ? `
+            <div class="row-actions">
+              <button class="icon-btn edit"   onclick="startEdit('${esc(s.rowId)}')">Edit</button>
+              <button class="icon-btn delete" onclick="deleteMine('${esc(s.rowId)}')">Delete</button>
+            </div>` : ''}
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── Add / Update flows ──────────────────────────────────
+  async function submitSignup() {
+    const name    = document.getElementById('name').value.trim();
+    const dish    = document.getElementById('dish').value.trim();
+    const serves  = document.getElementById('serves').value.trim();
+    const dietary = document.getElementById('dietary').value.trim();
+    const notes   = document.getElementById('notes').value.trim();
+
+    if (!selectedCategory) { showToast('Please choose a food category!', 'error'); return; }
+    if (!name)             { showToast('Please enter your name.', 'error');        return; }
+    if (!dish)             { showToast('Please enter what you\'re bringing.', 'error'); return; }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled    = true;
+    btn.textContent = 'Saving…';
+
+    const payload = { name, category: selectedCategory, dish, serves, dietary, notes };
+
+    if (editingRowId) {
+      payload.action    = 'updateSignup';
+      payload.rowId     = editingRowId;
+      payload.editToken = getMyTokens()[editingRowId];
+    } else {
+      payload.action = 'addSignup';
+    }
+
+    if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+      // Demo mode
+      await new Promise(r => setTimeout(r, 500));
+      if (editingRowId) {
+        const i = signups.findIndex(s => s.rowId === editingRowId);
+        signups[i] = { ...signups[i], name, category: selectedCategory, dish, serves, dietary };
+        showToast('✅ Updated! (demo)', 'success');
+      } else {
+        const rowId = 'demo-' + Date.now();
+        signups.push({ rowId, name, category: selectedCategory, dish, serves, dietary });
+        saveMyToken(rowId, 'demo-token');
+        showToast('🎉 Signed up! (demo)', 'success');
+      }
+      finishSubmit(); return;
+    }
+
+    try {
+      const res  = await fetch(APPS_SCRIPT_URL, { method:'POST', body: JSON.stringify(payload) });
+      const data = await res.json();
+      if (data.success) {
+        if (!editingRowId && data.rowId && data.editToken) {
+          saveMyToken(data.rowId, data.editToken);
+        }
+        showToast(editingRowId ? '✅ Your sign-up was updated!' : '🎉 You\'re signed up!', 'success');
+        await loadSignups();
+        finishSubmit();
+      } else {
+        showToast(data.message || 'Something went wrong.', 'error');
+        btn.disabled    = false;
+        btn.textContent = editingRowId ? 'Save Changes' : 'Sign Me Up!';
+      }
+    } catch (e) {
+      console.error(e);
+      showToast('Could not save. Check your connection.', 'error');
+      btn.disabled    = false;
+      btn.textContent = editingRowId ? 'Save Changes' : 'Sign Me Up!';
+    }
+  }
+
+  function finishSubmit() {
+    resetForm();
+    renderCategories(); renderTable();
+  }
+
+  function startEdit(rowId) {
+    const s = signups.find(x => x.rowId === rowId);
+    if (!s) return;
+    editingRowId = rowId;
+    document.getElementById('name').value    = s.name    || '';
+    document.getElementById('dish').value    = s.dish    || '';
+    document.getElementById('serves').value  = s.serves  || '';
+    document.getElementById('dietary').value = s.dietary || '';
+    document.getElementById('notes').value   = s.notes   || '';
+    selectCategory(s.category);
+    document.getElementById('edit-banner').style.display = 'flex';
+    document.getElementById('form-title').textContent    = '✏️ Edit Your Sign-Up';
+    document.getElementById('submit-btn').textContent    = 'Save Changes';
+    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function cancelEdit() { resetForm(); renderCategories(); renderTable(); }
+
+  function resetForm() {
+    editingRowId     = null;
+    selectedCategory = null;
+    ['name','dish','serves','dietary','notes'].forEach(id => document.getElementById(id).value = '');
+    const disp = document.getElementById('selected-cat-display');
+    disp.className   = 'selected-cat-display none full-width';
+    disp.textContent = '← Select a category above first';
+    document.getElementById('edit-banner').style.display = 'none';
+    document.getElementById('form-title').textContent    = '2 · Your Sign-Up Details';
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Sign Me Up!';
+    btn.disabled    = false;
+  }
+
+  // ── Delete flow ─────────────────────────────────────────
+  async function deleteMine(rowId) {
+    if (!confirm('Remove your sign-up? This can\'t be undone.')) return;
+    const editToken = getMyTokens()[rowId];
+    if (!editToken) { showToast('No edit token found for this entry.', 'error'); return; }
+
+    if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+      signups = signups.filter(s => s.rowId !== rowId);
+      removeMyToken(rowId);
+      renderCategories(); renderTable();
+      showToast('Removed. (demo)', 'success');
+      return;
+    }
+
+    try {
+      const res  = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body  : JSON.stringify({ action: 'deleteSignup', rowId, editToken }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        removeMyToken(rowId);
+        await loadSignups();
+        showToast('Your sign-up was removed.', 'success');
+      } else {
+        showToast(data.message || 'Could not delete.', 'error');
+      }
+    } catch (e) {
+      console.error(e);
+      showToast('Could not delete. Check your connection.', 'error');
+    }
+  }
+
+  // ── Utilities ───────────────────────────────────────────
+  function esc(str = '') {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function showToast(msg, type = '') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className   = 'show ' + type;
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => { t.className = type; }, 3500);
+  }
+
+  init();
+</script>
+
+</body>
+</html>
