@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Family Reunion – Food Sign Up</title>
+  <title>Raven Family Gathering – Food Sign Up</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -404,7 +404,7 @@
 <!-- ══ HEADER ═══════════════════════════ -->
 <header>
   <div class="badge">🍽 Food Sign‑Up</div>
-  <h1>2026 Family <span>Reunion</span></h1>
+  <h1>Raven Family <span>Gathering</span></h1>
   <p class="subtitle" id="header-subtitle">Loading event details…</p>
   <div id="event-details">
     <div class="detail-chip">📅 <span id="chip-date">…</span></div>
@@ -457,7 +457,7 @@
     <div class="rsvp-warning" id="rsvp-warning">
       <strong>⚠️ RSVP deadline has passed</strong>
       The RSVP date was <span id="warn-rsvp-date">—</span>. You're welcome to still sign up,
-      but please messsage <strong id="warn-contact">Sherry</strong> on
+      but please message <strong id="warn-contact">Sherry</strong> on
       <strong id="warn-phone">Facebook Messenger</strong> to confirm with the group.
     </div>
 
@@ -558,7 +558,8 @@
           <a id="map-apple"  class="map-link alt" target="_blank" rel="noopener" href="#">Open in Apple Maps</a>
         </div>
         <p style="margin-top:16px; font-size:0.88rem; color:var(--gray-md); line-height:1.5;">
-          Rose Park is a community park in Mishawaka, IN. The pavilion is on the park grounds.
+          Rose Park is a community park in Mishawaka, IN. The pavilion is on the park grounds —
+          look for the family gathering signs.
         </p>
       </div>
 
@@ -579,7 +580,7 @@
 </main>
 
 <footer>
-  Questions? Contact <strong id="footer-contact">Sherry</strong> on
+  Questions? Message <strong id="footer-contact">Sherry</strong> on
   <strong id="footer-phone">Facebook Messenger</strong>
 </footer>
 
@@ -642,11 +643,12 @@
         rsvpBy:        'July 18th, 2026',
         rsvpByISO:     '2026-07-18',
         locationName:  'Rose Park Pavilion',
-        address:       '900 E Mishawaka Ave, Mishawaka, IN 46544',
+        address:       'Rose Park, Mishawaka, IN 46544',
         costPerFamily: '$20 per family',
         paymentNote:   'Please pay David when you arrive.',
-        contactName:   'Sherry Raven',
-        description:   'Please review the available slots below and click on the button to sign up. We are expecting around 50–60 people. If you have any questions, please contact Sherry Raven on Facebook Messenger. Thank you!',
+        contactName:   'Sherry',
+        contactPhone:  'Facebook Messenger',
+        description:   'Please review the available slots below and click on the button to sign up. We are expecting around 50–60 people. If you have any questions, please message Sherry on Facebook Messenger. Thank you!',
         faq: [
           { q:'Will a main dish be provided?',  a:'Yes — a main dish will be provided.' },
           { q:'Is alcohol allowed?',            a:'No alcohol is allowed at the park.' },
@@ -697,7 +699,7 @@
     document.getElementById('chip-time').textContent = eventInfo.serveTime ? 'Food at ' + eventInfo.serveTime : '';
     document.getElementById('chip-loc').textContent  = eventInfo.locationName || '';
     document.getElementById('header-subtitle').textContent =
-      'Family reunion at ' + (eventInfo.locationName || '') + '. Pick a food category and let us know what you\'re bringing!';
+      'Family gathering at ' + (eventInfo.locationName || '') + '. Pick a food category and let us know what you\'re bringing!';
 
     // Quick facts
     document.getElementById('event-description').textContent = eventInfo.description || '';
@@ -744,7 +746,7 @@
     document.getElementById('footer-phone').textContent   = eventInfo.contactPhone || '';
 
     // Page title
-    if (eventInfo.locationName) document.title = `Family Reunion – ${eventInfo.locationName}`;
+    if (eventInfo.locationName) document.title = `Raven Family Gathering – ${eventInfo.locationName}`;
   }
 
   // ── Categories ─────────────────────────────────────────
