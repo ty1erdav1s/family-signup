@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Family Gathering – Food Sign Up</title>
+  <title>Family Reunion – Food Sign Up</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -28,7 +28,7 @@
       min-height: 100vh;
     }
 
-    /* HERO */
+    /* ── HERO ── */
     header {
       background: var(--navy);
       color: var(--white);
@@ -38,8 +38,7 @@
       overflow: hidden;
     }
     header::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: repeating-linear-gradient(45deg,
         transparent, transparent 40px,
         rgba(238,152,34,.06) 40px, rgba(238,152,34,.06) 80px);
@@ -60,22 +59,48 @@
     header h1 span { color: var(--orange); }
     header p.subtitle {
       margin-top: 14px; font-size: 1rem; color: var(--gray-lt);
-      font-weight: 300; max-width: 500px;
+      font-weight: 300; max-width: 540px;
       margin-inline: auto; position: relative;
     }
     #event-details {
-      display: flex; justify-content: center; gap: 28px;
-      margin-top: 28px; flex-wrap: wrap; position: relative;
+      display: flex; justify-content: center; gap: 14px;
+      margin-top: 26px; flex-wrap: wrap; position: relative;
     }
     .detail-chip {
       background: rgba(255,255,255,.1);
       border: 1px solid rgba(255,255,255,.2);
-      border-radius: 4px; padding: 8px 18px;
+      border-radius: 4px; padding: 8px 16px;
       font-size: 0.85rem; font-weight: 700; letter-spacing: .5px;
     }
 
-    /* LAYOUT */
-    main { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+    /* ── NAV TABS ── */
+    .tabs {
+      max-width: 900px; margin: 0 auto;
+      display: flex; gap: 4px;
+      padding: 0 20px;
+      transform: translateY(-22px);
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .tab {
+      background: var(--white); color: var(--navy);
+      border: none; border-radius: 4px 4px 0 0;
+      padding: 12px 22px;
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 -2px 8px rgba(0,0,0,.05);
+      transition: background .15s, color .15s;
+    }
+    .tab.active { background: var(--orange); color: var(--navy); }
+    .tab:hover:not(.active) { background: var(--gray-lt); }
+
+    /* ── LAYOUT ── */
+    main { max-width: 900px; margin: 0 auto; padding: 0 20px 80px; }
+
+    .page { display: none; }
+    .page.active { display: block; }
 
     .section-label {
       font-family: 'Lato', Arial, sans-serif;
@@ -83,7 +108,47 @@
       text-transform: uppercase; color: var(--gray-md); margin-bottom: 16px;
     }
 
-    /* CATEGORY GRID */
+    /* ── DESCRIPTION CARD ── */
+    .info-card {
+      background: var(--white); border-radius: 6px;
+      padding: 28px 32px; margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      border-top: 4px solid var(--orange);
+    }
+    .info-card p { line-height: 1.65; font-size: 0.95rem; color: var(--black); }
+
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .fact {
+      background: var(--white); border-radius: 6px;
+      padding: 16px 18px; box-shadow: 0 1px 6px rgba(0,0,0,.06);
+      border-left: 4px solid var(--blue);
+    }
+    .fact .label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--gray-md); margin-bottom: 4px;
+    }
+    .fact .value { font-weight: 700; color: var(--navy); font-size: 0.98rem; }
+    .fact.cost   { border-left-color: var(--orange); }
+    .fact.rsvp   { border-left-color: var(--red);    }
+
+    /* ── RSVP WARNING ── */
+    .rsvp-warning {
+      background: #fff4f3;
+      border: 2px solid var(--red);
+      border-radius: 6px;
+      padding: 16px 20px; margin-bottom: 24px;
+      font-size: 0.9rem; color: var(--red);
+      display: none;
+    }
+    .rsvp-warning strong { display: block; margin-bottom: 4px; font-size: 1rem; }
+    .rsvp-warning.show { display: block; }
+
+    /* ── CATEGORY GRID ── */
     .categories {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -118,7 +183,7 @@
     .cat-meta .spots       { font-weight: 700; }
     .cat-meta .spots.zero  { color: var(--red); }
 
-    /* FORM */
+    /* ── FORM ── */
     .form-card {
       background: var(--white); border-radius: 6px;
       padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.07);
@@ -157,7 +222,7 @@
       border-color: var(--gray-lt); color: var(--gray-md); font-weight: 400;
     }
 
-    /* BUTTONS */
+    /* ── BUTTONS ── */
     .submit-btn {
       margin-top: 22px; width: 100%; background: var(--navy);
       color: var(--white); border: none; border-radius: 4px;
@@ -167,10 +232,8 @@
     }
     .submit-btn:hover    { background: var(--blue); }
     .submit-btn:disabled { background: var(--gray-md); cursor: not-allowed; }
-    .submit-btn.cancel   { background: var(--gray-md); margin-top: 8px; }
-    .submit-btn.cancel:hover { background: var(--black); }
 
-    /* SIGNUPS LIST */
+    /* ── SIGNUPS LIST ── */
     .signups-card {
       background: var(--white); border-radius: 6px;
       padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.07);
@@ -193,7 +256,8 @@
     }
     .refresh-btn:hover { background: var(--blue); color: var(--white); }
 
-    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 600px; }
     thead th {
       background: var(--navy); color: var(--white);
       text-align: left; padding: 10px 14px;
@@ -208,6 +272,7 @@
       display: inline-block; background: var(--navy); color: var(--white);
       border-radius: 3px; padding: 2px 8px;
       font-size: 0.72rem; font-weight: 700; letter-spacing: .5px;
+      white-space: nowrap;
     }
 
     .row-actions { display: flex; gap: 6px; }
@@ -226,7 +291,71 @@
       text-transform: uppercase;
     }
 
-    /* TOAST */
+    /* ── DETAILS PAGE ── */
+    .details-grid {
+      display: grid; gap: 24px;
+      grid-template-columns: 1fr; margin-bottom: 24px;
+    }
+    .detail-card {
+      background: var(--white); border-radius: 6px;
+      padding: 28px 32px; box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    }
+    .detail-card h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--navy); font-size: 1.4rem; margin-bottom: 16px;
+    }
+    .detail-row {
+      display: flex; padding: 10px 0;
+      border-bottom: 1px solid var(--gray-lt);
+      gap: 14px; align-items: baseline;
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-row .key {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--gray-md); min-width: 110px;
+    }
+    .detail-row .val { font-size: 0.98rem; color: var(--navy); font-weight: 700; }
+
+    .map-wrap {
+      border-radius: 6px; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      margin-bottom: 14px;
+    }
+    .map-wrap iframe { width: 100%; height: 380px; border: 0; display: block; }
+
+    .map-links {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;
+    }
+    .map-link {
+      background: var(--navy); color: var(--white);
+      text-decoration: none; padding: 10px 18px;
+      border-radius: 4px; font-family: 'Lato', Arial, sans-serif;
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: .8px; text-transform: uppercase;
+      transition: background .18s;
+    }
+    .map-link:hover { background: var(--blue); }
+    .map-link.alt   { background: var(--orange); color: var(--navy); }
+    .map-link.alt:hover { background: var(--yellow); }
+
+    /* ── FAQ ── */
+    .faq-item {
+      border-bottom: 1px solid var(--gray-lt);
+      padding: 16px 0;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      font-weight: 700; color: var(--navy);
+      font-size: 1rem; margin-bottom: 6px;
+    }
+    .faq-q::before { content: 'Q. '; color: var(--orange); }
+    .faq-a {
+      color: var(--black); font-size: 0.93rem; line-height: 1.55;
+    }
+    .faq-a::before { content: 'A. '; color: var(--blue); font-weight: 700; }
+
+    /* ── TOAST ── */
     #toast {
       position: fixed; bottom: 28px; left: 50%;
       transform: translateX(-50%) translateY(80px);
@@ -237,9 +366,9 @@
       transition: transform .3s ease; z-index: 999;
       max-width: 90vw; text-align: center;
     }
-    #toast.show       { transform: translateX(-50%) translateY(0); }
-    #toast.success    { background: var(--green); }
-    #toast.error      { background: var(--red); }
+    #toast.show    { transform: translateX(-50%) translateY(0); }
+    #toast.success { background: var(--green); }
+    #toast.error   { background: var(--red); }
 
     .loading-row td { text-align: center; color: var(--gray-md); padding: 30px; }
 
@@ -261,92 +390,198 @@
       font-size: 0.88rem; font-weight: 700;
       display: flex; justify-content: space-between; align-items: center;
     }
+
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      font-size: 0.8rem;
+      color: var(--gray-md);
+    }
   </style>
 </head>
 <body>
 
+<!-- ══ HEADER ═══════════════════════════ -->
 <header>
   <div class="badge">🍽 Food Sign‑Up</div>
-  <h1>Family <span>Gathering</span></h1>
-  <p class="subtitle">Pick a food category below and let us know what you're bringing!</p>
+  <h1>2026 Family <span>Reunion</span></h1>
+  <p class="subtitle" id="header-subtitle">Loading event details…</p>
   <div id="event-details">
-    <div class="detail-chip">📅 <span id="event-date">Loading…</span></div>
-    <div class="detail-chip">📍 <span id="event-location">Loading…</span></div>
+    <div class="detail-chip">📅 <span id="chip-date">…</span></div>
+    <div class="detail-chip">🕐 <span id="chip-time">…</span></div>
+    <div class="detail-chip">📍 <span id="chip-loc">…</span></div>
   </div>
 </header>
+
+<!-- ══ TABS ═══════════════════════════ -->
+<div class="tabs">
+  <button class="tab active" data-page="signup"  onclick="showPage('signup')">Sign Up</button>
+  <button class="tab"        data-page="details" onclick="showPage('details')">Event Details &amp; Map</button>
+  <button class="tab"        data-page="faq"     onclick="showPage('faq')">FAQ</button>
+</div>
 
 <main>
 
   <div class="config-notice" id="config-notice">
     <strong>⚙️ Setup Required</strong>
-    Open this file in a text editor and replace <code>YOUR_APPS_SCRIPT_URL_HERE</code> near the
-    top of the &lt;script&gt; section with your deployed Google Apps Script web app URL.
-    See the included <strong>SETUP.md</strong> for step-by-step instructions.
+    Open this file in a text editor and replace <code>YOUR_APPS_SCRIPT_URL_HERE</code> with your
+    deployed Google Apps Script web app URL. See <strong>SETUP.md</strong> for steps.
   </div>
 
-  <p class="section-label">1 · Choose a Food Category</p>
-  <div class="categories" id="categories-grid">
-    <div style="grid-column:1/-1; text-align:center; color:var(--gray-md); padding:20px;">
-      Loading categories…
+  <!-- ── PAGE 1 : SIGN UP ─────────────────────────────── -->
+  <div class="page active" id="page-signup">
+
+    <div class="info-card">
+      <p id="event-description">Loading…</p>
     </div>
+
+    <div class="quick-facts">
+      <div class="fact">
+        <div class="label">📅 Date</div>
+        <div class="value" id="fact-date">—</div>
+      </div>
+      <div class="fact">
+        <div class="label">🕐 Food Served</div>
+        <div class="value" id="fact-time">—</div>
+      </div>
+      <div class="fact cost">
+        <div class="label">💵 Cost / Family</div>
+        <div class="value" id="fact-cost">—</div>
+      </div>
+      <div class="fact rsvp">
+        <div class="label">⏰ RSVP By</div>
+        <div class="value" id="fact-rsvp">—</div>
+      </div>
+    </div>
+
+    <div class="rsvp-warning" id="rsvp-warning">
+      <strong>⚠️ RSVP deadline has passed</strong>
+      The RSVP date was <span id="warn-rsvp-date">—</span>. You're welcome to still sign up,
+      but please messsage <strong id="warn-contact">Sherry</strong> on
+      <strong id="warn-phone">Facebook Messenger</strong> to confirm with the group.
+    </div>
+
+    <p class="section-label">1 · Choose a Food Category</p>
+    <div class="categories" id="categories-grid">
+      <div style="grid-column:1/-1; text-align:center; color:var(--gray-md); padding:20px;">
+        Loading categories…
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2 id="form-title">2 · Your Sign-Up Details</h2>
+
+      <div class="edit-mode-banner" id="edit-banner" style="display:none;">
+        <span>✏️ Editing your sign-up</span>
+        <button class="icon-btn" onclick="cancelEdit()" style="color:white;border-color:white;">Cancel</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="selected-cat-display none full-width" id="selected-cat-display">
+          ← Select a category above first
+        </div>
+
+        <div class="field">
+          <label for="name">Your Name *</label>
+          <input type="text" id="name" placeholder="e.g. Aunt Linda" required/>
+        </div>
+        <div class="field">
+          <label for="dish">Dish / Item *</label>
+          <input type="text" id="dish" placeholder="e.g. Mac & Cheese" required/>
+        </div>
+        <div class="field">
+          <label for="serves">Approximate Servings</label>
+          <input type="number" id="serves" placeholder="e.g. 8" min="1"/>
+        </div>
+        <div class="field">
+          <label for="dietary">Dietary Info</label>
+          <input type="text" id="dietary" placeholder="e.g. Gluten‑free, Vegan"/>
+        </div>
+        <div class="field full-width">
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" placeholder="Anything else we should know?"></textarea>
+        </div>
+      </div>
+      <button class="submit-btn" id="submit-btn" onclick="submitSignup()">Sign Me Up!</button>
+    </div>
+
+    <div class="signups-card">
+      <div class="signups-header">
+        <h2>Who's Bringing What</h2>
+        <button class="refresh-btn" onclick="loadSignups()">↻ Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th><th>Category</th><th>Dish</th>
+              <th>Servings</th><th>Dietary</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="signups-tbody">
+            <tr class="loading-row"><td colspan="6">Loading sign-ups…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
-  <div class="form-card">
-    <h2 id="form-title">2 · Your Sign-Up Details</h2>
+  <!-- ── PAGE 2 : DETAILS & MAP ──────────────────────── -->
+  <div class="page" id="page-details">
 
-    <div class="edit-mode-banner" id="edit-banner" style="display:none;">
-      <span>✏️ Editing your sign-up</span>
-      <button class="icon-btn" onclick="cancelEdit()" style="color:white;border-color:white;">Cancel</button>
+    <div class="details-grid">
+
+      <div class="detail-card">
+        <h2>Event Details</h2>
+        <div class="detail-row"><div class="key">Date</div>     <div class="val" id="det-date">—</div></div>
+        <div class="detail-row"><div class="key">Food Served</div> <div class="val" id="det-time">—</div></div>
+        <div class="detail-row"><div class="key">Location</div> <div class="val" id="det-loc">—</div></div>
+        <div class="detail-row"><div class="key">Address</div>  <div class="val" id="det-addr">—</div></div>
+        <div class="detail-row"><div class="key">Cost</div>     <div class="val" id="det-cost">—</div></div>
+        <div class="detail-row"><div class="key">Payment</div>  <div class="val" id="det-pay">—</div></div>
+        <div class="detail-row"><div class="key">RSVP By</div>  <div class="val" id="det-rsvp">—</div></div>
+        <div class="detail-row"><div class="key">Contact</div>  <div class="val" id="det-contact">—</div></div>
+      </div>
+
+      <div class="detail-card">
+        <h2>Map &amp; Directions</h2>
+        <div class="map-wrap">
+          <iframe id="map-iframe"
+                  src=""
+                  loading="lazy"
+                  allowfullscreen
+                  referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="map-links">
+          <a id="map-google" class="map-link" target="_blank" rel="noopener" href="#">Open in Google Maps</a>
+          <a id="map-apple"  class="map-link alt" target="_blank" rel="noopener" href="#">Open in Apple Maps</a>
+        </div>
+        <p style="margin-top:16px; font-size:0.88rem; color:var(--gray-md); line-height:1.5;">
+          Rose Park is a community park in Mishawaka, IN. The pavilion is on the park grounds.
+        </p>
+      </div>
+
     </div>
 
-    <div class="form-grid">
-      <div class="selected-cat-display none full-width" id="selected-cat-display">
-        ← Select a category above first
-      </div>
-
-      <div class="field">
-        <label for="name">Your Name *</label>
-        <input type="text" id="name" placeholder="e.g. Aunt Linda" required/>
-      </div>
-      <div class="field">
-        <label for="dish">Dish / Item *</label>
-        <input type="text" id="dish" placeholder="e.g. Mac & Cheese" required/>
-      </div>
-      <div class="field">
-        <label for="serves">Approximate Servings</label>
-        <input type="number" id="serves" placeholder="e.g. 8" min="1"/>
-      </div>
-      <div class="field">
-        <label for="dietary">Dietary Info</label>
-        <input type="text" id="dietary" placeholder="e.g. Gluten‑free, Vegan"/>
-      </div>
-      <div class="field full-width">
-        <label for="notes">Notes (optional)</label>
-        <textarea id="notes" placeholder="Anything else we should know?"></textarea>
-      </div>
-    </div>
-    <button class="submit-btn" id="submit-btn" onclick="submitSignup()">Sign Me Up!</button>
   </div>
 
-  <div class="signups-card">
-    <div class="signups-header">
-      <h2>Who's Bringing What</h2>
-      <button class="refresh-btn" onclick="loadSignups()">↻ Refresh</button>
+  <!-- ── PAGE 3 : FAQ ─────────────────────────────────── -->
+  <div class="page" id="page-faq">
+    <div class="detail-card">
+      <h2>Frequently Asked Questions</h2>
+      <div id="faq-list">
+        <div class="loading-row" style="text-align:center; padding:20px; color:var(--gray-md);">Loading…</div>
+      </div>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th><th>Category</th><th>Dish</th>
-          <th>Servings</th><th>Dietary</th><th></th>
-        </tr>
-      </thead>
-      <tbody id="signups-tbody">
-        <tr class="loading-row"><td colspan="6">Loading sign-ups…</td></tr>
-      </tbody>
-    </table>
   </div>
 
 </main>
+
+<footer>
+  Questions? Contact <strong id="footer-contact">Sherry</strong> on
+  <strong id="footer-phone">Facebook Messenger</strong>
+</footer>
 
 <div id="toast"></div>
 
@@ -357,14 +592,24 @@
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw7Lk4Idz3ehnuMoGfMMU3tTaWCW0JjGspS1NqDhUjR1F0PP22bmb3yvxQBuzO8M-tZ/exec';
   // ─────────────────────────────────────────────────────────
 
-  const LS_KEY = 'familyGathering_myTokens';   // localStorage key for {rowId: editToken}
+  const LS_KEY = 'ravenGathering_myTokens';
 
   let categories       = [];
   let signups          = [];
+  let eventInfo        = {};
   let selectedCategory = null;
-  let editingRowId     = null;   // null = adding new, otherwise editing this row
+  let editingRowId     = null;
 
-  // ── Local-storage helpers ───────────────────────────────
+  // ── Tab switching ──────────────────────────────────────
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelector(`.tab[data-page="${id}"]`).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── localStorage ───────────────────────────────────────
   function getMyTokens() {
     try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
     catch { return {}; }
@@ -379,41 +624,51 @@
   }
   function isMine(rowId) { return !!getMyTokens()[rowId]; }
 
-  // ── Boot ────────────────────────────────────────────────
+  // ── Boot ───────────────────────────────────────────────
   async function init() {
     if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-      // Demo mode
+      // Demo mode (matches Apps Script defaults)
       categories = [
-        { id:'appetizers', name:'Appetizers',  emoji:'🥗', limit:4 },
-        { id:'mains',      name:'Main Dishes', emoji:'🍗', limit:5 },
-        { id:'sides',      name:'Side Dishes', emoji:'🥘', limit:6 },
-        { id:'desserts',   name:'Desserts',    emoji:'🍰', limit:5 },
-        { id:'drinks',     name:'Drinks',      emoji:'🥤', limit:4 },
+        { id:'hot_sides',  name:'Hot Side Dishes',  emoji:'🍲', limit:10 },
+        { id:'cold_sides', name:'Cold Side Dishes', emoji:'🥗', limit:10 },
+        { id:'fruit',      name:'Fruit Dishes',     emoji:'🍓', limit:3  },
+        { id:'vegetables', name:'Vegetable Dishes', emoji:'🥦', limit:3  },
+        { id:'snacks',     name:'Snacks',           emoji:'🥨', limit:8  },
+        { id:'desserts',   name:'Desserts',         emoji:'🍰', limit:6  },
       ];
-      document.getElementById('event-date').textContent     = 'Event Date (demo)';
-      document.getElementById('event-location').textContent = 'Event Location (demo)';
-      signups = [
-        { rowId:'demo-1', name:'Aunt Linda', category:'mains',    dish:'Baked Ziti',     serves:'10', dietary:'' },
-        { rowId:'demo-2', name:'Uncle Bob',  category:'drinks',   dish:'Lemonade',       serves:'12', dietary:'Vegan' },
-        { rowId:'demo-3', name:'Cousin Mia', category:'desserts', dish:'Chocolate Cake', serves:'8',  dietary:'' },
-      ];
-      renderCategories(); renderTable();
+      eventInfo = {
+        date:          'Saturday, July 25th, 2026',
+        serveTime:     '1:00 PM',
+        rsvpBy:        'July 18th, 2026',
+        rsvpByISO:     '2026-07-18',
+        locationName:  'Rose Park Pavilion',
+        address:       '900 E Mishawaka Ave, Mishawaka, IN 46544',
+        costPerFamily: '$20 per family',
+        paymentNote:   'Please pay David when you arrive.',
+        contactName:   'Sherry Raven',
+        description:   'Please review the available slots below and click on the button to sign up. We are expecting around 50–60 people. If you have any questions, please contact Sherry Raven on Facebook Messenger. Thank you!',
+        faq: [
+          { q:'Will a main dish be provided?',  a:'Yes — a main dish will be provided.' },
+          { q:'Is alcohol allowed?',            a:'No alcohol is allowed at the park.' },
+          { q:'What activities will there be?', a:'Games, prizes, and a splash pad.' },
+        ],
+      };
+      signups = [];
+      applyConfig(); renderCategories(); renderTable(); renderFaq();
       return;
     }
 
     document.getElementById('config-notice').style.display = 'none';
 
-    // Fetch config + signups in parallel
     try {
       const [configRes, signupsRes] = await Promise.all([
         fetch(`${APPS_SCRIPT_URL}?action=getConfig`).then(r => r.json()),
         fetch(`${APPS_SCRIPT_URL}?action=getSignups`).then(r => r.json()),
       ]);
       categories = configRes.categories || [];
-      document.getElementById('event-date').textContent     = configRes.event?.date     || '';
-      document.getElementById('event-location').textContent = configRes.event?.location || '';
-      signups = signupsRes.signups || [];
-      renderCategories(); renderTable();
+      eventInfo  = configRes.event || {};
+      signups    = signupsRes.signups || [];
+      applyConfig(); renderCategories(); renderTable(); renderFaq();
     } catch (e) {
       console.error(e);
       showToast('Could not load. Check your Apps Script URL.', 'error');
@@ -435,7 +690,64 @@
     }
   }
 
-  // ── Render ──────────────────────────────────────────────
+  // ── Apply event config to UI ───────────────────────────
+  function applyConfig() {
+    // Header chips
+    document.getElementById('chip-date').textContent = eventInfo.date || '';
+    document.getElementById('chip-time').textContent = eventInfo.serveTime ? 'Food at ' + eventInfo.serveTime : '';
+    document.getElementById('chip-loc').textContent  = eventInfo.locationName || '';
+    document.getElementById('header-subtitle').textContent =
+      'Family reunion at ' + (eventInfo.locationName || '') + '. Pick a food category and let us know what you\'re bringing!';
+
+    // Quick facts
+    document.getElementById('event-description').textContent = eventInfo.description || '';
+    document.getElementById('fact-date').textContent = eventInfo.date      || '—';
+    document.getElementById('fact-time').textContent = eventInfo.serveTime || '—';
+    document.getElementById('fact-cost').textContent = eventInfo.costPerFamily || '—';
+    document.getElementById('fact-rsvp').textContent = eventInfo.rsvpBy    || '—';
+
+    // RSVP warning
+    if (eventInfo.rsvpByISO) {
+      const deadline = new Date(eventInfo.rsvpByISO + 'T23:59:59');
+      if (new Date() > deadline) {
+        document.getElementById('rsvp-warning').classList.add('show');
+        document.getElementById('warn-rsvp-date').textContent = eventInfo.rsvpBy;
+        document.getElementById('warn-contact').textContent   = eventInfo.contactName  || '';
+        document.getElementById('warn-phone').textContent     = eventInfo.contactPhone || '';
+      }
+    }
+
+    // Details page
+    document.getElementById('det-date').textContent = eventInfo.date      || '—';
+    document.getElementById('det-time').textContent = eventInfo.serveTime || '—';
+    document.getElementById('det-loc').textContent  = eventInfo.locationName || '—';
+    document.getElementById('det-addr').textContent = eventInfo.address   || '—';
+    document.getElementById('det-cost').textContent = eventInfo.costPerFamily || '—';
+    document.getElementById('det-pay').textContent  = eventInfo.paymentNote   || '—';
+    document.getElementById('det-rsvp').textContent = eventInfo.rsvpBy    || '—';
+    document.getElementById('det-contact').textContent =
+      (eventInfo.contactName || '') + ' · ' + (eventInfo.contactPhone || '');
+
+    // Map
+    const q = encodeURIComponent(eventInfo.address || eventInfo.locationName || '');
+    if (q) {
+      document.getElementById('map-iframe').src =
+        `https://www.google.com/maps?q=${q}&output=embed`;
+      document.getElementById('map-google').href =
+        `https://www.google.com/maps/dir/?api=1&destination=${q}`;
+      document.getElementById('map-apple').href =
+        `https://maps.apple.com/?daddr=${q}`;
+    }
+
+    // Footer
+    document.getElementById('footer-contact').textContent = eventInfo.contactName  || '';
+    document.getElementById('footer-phone').textContent   = eventInfo.contactPhone || '';
+
+    // Page title
+    if (eventInfo.locationName) document.title = `Family Reunion – ${eventInfo.locationName}`;
+  }
+
+  // ── Categories ─────────────────────────────────────────
   function renderCategories() {
     const grid = document.getElementById('categories-grid');
     grid.innerHTML = '';
@@ -446,7 +758,6 @@
       const isFull    = remaining <= 0;
       const isWarn    = pct >= 0.67 && !isFull;
 
-      // When editing, allow selecting the same category even if "full"
       const editingThis = editingRowId && signups.find(s => s.rowId === editingRowId)?.category === cat.id;
       const blocked     = isFull && !editingThis;
 
@@ -463,7 +774,7 @@
                style="width:${pct*100}%"></div>
         </div>
         <div class="cat-meta">
-          <span>${count} of ${cat.limit} signed up</span>
+          <span>${count} of ${cat.limit} slots filled</span>
           <span class="spots ${isFull ? 'zero' : ''}">
             ${isFull ? 'FULL' : remaining + ' spot' + (remaining===1?'':'s') + ' left'}
           </span>
@@ -483,6 +794,7 @@
     renderCategories();
   }
 
+  // ── Table ──────────────────────────────────────────────
   function renderTable() {
     const tbody = document.getElementById('signups-tbody');
     if (!signups.length) {
@@ -510,7 +822,20 @@
     }).join('');
   }
 
-  // ── Add / Update flows ──────────────────────────────────
+  // ── FAQ ────────────────────────────────────────────────
+  function renderFaq() {
+    const list = document.getElementById('faq-list');
+    const faq  = eventInfo.faq || [];
+    if (!faq.length) { list.innerHTML = '<p style="color:var(--gray-md)">No FAQs yet.</p>'; return; }
+    list.innerHTML = faq.map(item => `
+      <div class="faq-item">
+        <div class="faq-q">${esc(item.q)}</div>
+        <div class="faq-a">${esc(item.a)}</div>
+      </div>
+    `).join('');
+  }
+
+  // ── Submit ─────────────────────────────────────────────
   async function submitSignup() {
     const name    = document.getElementById('name').value.trim();
     const dish    = document.getElementById('dish').value.trim();
@@ -519,7 +844,7 @@
     const notes   = document.getElementById('notes').value.trim();
 
     if (!selectedCategory) { showToast('Please choose a food category!', 'error'); return; }
-    if (!name)             { showToast('Please enter your name.', 'error');        return; }
+    if (!name)             { showToast('Please enter your name.', 'error'); return; }
     if (!dish)             { showToast('Please enter what you\'re bringing.', 'error'); return; }
 
     const btn = document.getElementById('submit-btn');
@@ -527,7 +852,6 @@
     btn.textContent = 'Saving…';
 
     const payload = { name, category: selectedCategory, dish, serves, dietary, notes };
-
     if (editingRowId) {
       payload.action    = 'updateSignup';
       payload.rowId     = editingRowId;
@@ -537,7 +861,6 @@
     }
 
     if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-      // Demo mode
       await new Promise(r => setTimeout(r, 500));
       if (editingRowId) {
         const i = signups.findIndex(s => s.rowId === editingRowId);
@@ -612,18 +935,16 @@
     btn.disabled    = false;
   }
 
-  // ── Delete flow ─────────────────────────────────────────
   async function deleteMine(rowId) {
     if (!confirm('Remove your sign-up? This can\'t be undone.')) return;
     const editToken = getMyTokens()[rowId];
-    if (!editToken) { showToast('No edit token found for this entry.', 'error'); return; }
+    if (!editToken) { showToast('No edit token found.', 'error'); return; }
 
     if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
       signups = signups.filter(s => s.rowId !== rowId);
       removeMyToken(rowId);
       renderCategories(); renderTable();
-      showToast('Removed. (demo)', 'success');
-      return;
+      showToast('Removed. (demo)', 'success'); return;
     }
 
     try {
@@ -641,11 +962,11 @@
       }
     } catch (e) {
       console.error(e);
-      showToast('Could not delete. Check your connection.', 'error');
+      showToast('Could not delete.', 'error');
     }
   }
 
-  // ── Utilities ───────────────────────────────────────────
+  // ── Utilities ──────────────────────────────────────────
   function esc(str = '') {
     return String(str)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
