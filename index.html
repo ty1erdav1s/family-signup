@@ -701,17 +701,6 @@
     document.getElementById('fact-cost').textContent = eventInfo.costPerFamily || '—';
     document.getElementById('fact-rsvp').textContent = eventInfo.rsvpBy    || '—';
 
-    // RSVP warning
-    if (eventInfo.rsvpByISO) {
-      const deadline = new Date(eventInfo.rsvpByISO + 'T23:59:59');
-      if (new Date() > deadline) {
-        document.getElementById('rsvp-warning').classList.add('show');
-        document.getElementById('warn-rsvp-date').textContent = eventInfo.rsvpBy;
-        document.getElementById('warn-contact').textContent   = eventInfo.contactName  || '';
-        document.getElementById('warn-phone').textContent     = eventInfo.contactPhone || '';
-      }
-    }
-
     // Details page
     document.getElementById('det-date').textContent = eventInfo.date      || '—';
     document.getElementById('det-time').textContent = eventInfo.serveTime || '—';
